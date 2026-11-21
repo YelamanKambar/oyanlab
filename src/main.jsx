@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { services } from './data/services'
 import { portfolioItems } from './data/portfolio'
+import '@fontsource-variable/noto-sans'
 import './styles.css'
 
 const COPY = {
@@ -13,25 +14,25 @@ const COPY = {
     heroText: 'Мұғалімдерге уақыт үнемдейтін көрнекі презентациялар, интерактивті тапсырмалар және толық сабақ жинақтары жасаймыз.',
     primary: 'Жобаға тапсырыс беру',
     secondary: 'Жұмыстарды қарау',
-    servicesTitle: 'Біздің жұмыстың пішіні',
-    servicesText: 'Тақырып, пән және мұғалімнің мақсатына қарай сандық оқу материалын ойлап шығарамыз.',
+    servicesTitle: 'Жұмысымыздың форматы',
+    servicesText: 'Тақырыпты, пәнді және мұғалімнің мақсаттарын ескере отырып, цифрлық оқу материалдарын әзірлейміз.',
     details: 'Толығырақ',
     portfolioTitle: 'Портфолио',
-    portfolioText: 'Төмендегі материалдар OyanLab мүмкіндігін көрсететін демонстрациялық үлгілер.',
+    portfolioText: 'Төмендегі үлгілер OyanLab мүмкіндіктерін көрсетеді.',
     openDemo: 'Үлгіні ашу',
     processTitle: 'Үш қадаммен',
     process: [
-      ['01', 'Тапсырма', 'Пәнді, тақырыпты, тілді және қалаған форматты айтадысыз.'],
+      ['01', 'Тапсырма', 'Пәнін, тақырыбын, тілін және қалаған форматын хабарлайсыз.'],
       ['02', 'Жобалау', 'Құрылымды, стилін және мазмұн жоспарын келісеміз.'],
-      ['03', 'Нәтиже', 'Мәтіндер мен форматтауды тексеріп, дайын материалды береміз.'],
+      ['03', 'Нәтиже', 'Мәтін мен форматтау соңғы тексерістен өтіп, дайын материалды береміз.'],
     ],
     contactTitle: 'Сабаққа арналған идея бар ма?',
-    contactText: 'Тапсырма туралы жазып, қажетті формат пен мерзімді келісейік.',
+    contactText: 'Тапсырмаңыз бен қажетті форматы туралы жазып, мерзімін келісейік.',
     instagram: 'Instagram',
     whatsapp: 'WhatsApp',
     orderData: 'Тапсырыс үшін',
     orderHint: 'Пән · Тақырып · Тіл · Қажетті формат',
-    footer: 'Цифрлық білімнің жаңа форматы.',
+    footer: 'Цифрлық білімге арналған жаңа формат.',
     close: 'Жабу',
   },
   ru: {
@@ -222,7 +223,7 @@ function App() {
           ))}
         </nav>
         <div className="header-actions">
-          <div className="language-switch" aria-label="Выбор языка">
+          <div className="language-switch" aria-label={lang === 'kk' ? 'Тілді таңдау' : 'Выбор языка'}>
             <button className={lang === 'kk' ? 'active' : ''} aria-pressed={lang === 'kk'} onClick={() => switchLang('kk')}>ҚАЗ</button>
             <button className={lang === 'ru' ? 'active' : ''} aria-pressed={lang === 'ru'} onClick={() => switchLang('ru')}>РУС</button>
           </div>
@@ -232,7 +233,9 @@ function App() {
             type="button"
             aria-expanded={menuOpen}
             aria-controls="main-navigation"
-            aria-label={menuOpen ? 'Закрыть меню' : 'Открыть меню'}
+            aria-label={lang === 'kk'
+              ? (menuOpen ? 'Мәзірді жабу' : 'Мәзірді ашу')
+              : (menuOpen ? 'Закрыть меню' : 'Открыть меню')}
             onClick={() => setMenuOpen((value) => !value)}
           >
             <span /><span />
@@ -326,7 +329,7 @@ function App() {
 
         <section className="process section" id="process">
           <div className="section-heading">
-            <p className="eyebrow"><span />{lang === 'kk' ? 'Процесс' : 'Процесс'}</p>
+            <p className="eyebrow"><span />{lang === 'kk' ? 'Жұмыс барысы' : 'Процесс'}</p>
             <h2>{t.processTitle}</h2>
           </div>
           <div className="process-grid">

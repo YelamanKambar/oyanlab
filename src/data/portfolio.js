@@ -30,8 +30,8 @@ export const portfolioItems = [
     type: 'kit',
     accent: 'mixed',
     kz: {
-      title: 'Сабақ комплекті',
-      label: 'Демонстрациялық макет',
+      title: 'Сабаққа арналған жинақ',
+      label: 'Демонстрациялық үлгі',
     },
     ru: {
       title: 'Комплект урока',
