@@ -297,10 +297,21 @@ function App() {
                 <div className={`portfolio-preview ${item.type}`}>
                   <span className="demo-tag">{item[dataLang].label}</span>
                   {item.type === 'presentation' && (
-                    <div className="presentation-preview">
-                      <strong>CIRCULATORY<br />SYSTEM</strong>
-                      <div className="organ-circle" />
-                    </div>
+                    item.presentationModal ? (
+                      <button
+                        type="button"
+                        className="presentation-preview friends-presentation-preview"
+                        aria-label={item[dataLang].title}
+                        onClick={(event) => {
+                          demoTriggerRef.current = event.currentTarget
+                          setActiveDemo(item)
+                        }}
+                      >
+                        <img src={item.preview} alt={item[dataLang].title} />
+                      </button>
+                    ) : (
+                      <div className="presentation-preview" />
+                    )
                   )}
                   {item.type === 'interactive' && (
                     <div className="quiz-preview">
@@ -316,7 +327,10 @@ function App() {
                   )}
                 </div>
                 <div className="portfolio-meta">
-                  <h3>{item[dataLang].title}</h3>
+                  <div>
+                    <h3>{item[dataLang].title}</h3>
+                    {item[dataLang].description && <p className="portfolio-description">{item[dataLang].description}</p>}
+                  </div>
                   <button type="button" onClick={(event) => {
                     demoTriggerRef.current = event.currentTarget
                     setActiveDemo(item)
@@ -374,16 +388,41 @@ function App() {
 
       {activeDemo && (
         <div className="modal-backdrop" role="presentation" onMouseDown={() => setActiveDemo(null)}>
-          <div ref={modalRef} className="demo-modal" role="dialog" aria-modal="true" aria-label={activeDemo[dataLang].title} onMouseDown={(event) => event.stopPropagation()}>
+          <div
+            ref={modalRef}
+            className={activeDemo.presentationModal ? 'demo-modal presentation-modal' : 'demo-modal'}
+            role="dialog"
+            aria-modal="true"
+            aria-label={activeDemo[dataLang].title}
+            onMouseDown={(event) => event.stopPropagation()}
+          >
             <button ref={closeModalRef} className="modal-close" type="button" onClick={closeModal}>{t.close} ×</button>
-            <p className="eyebrow"><span />{activeDemo[dataLang].label}</p>
-            <h2>{activeDemo[dataLang].title}</h2>
-            {activeDemo.type === 'interactive' ? (
+            {activeDemo.presentationModal ? (
+              <iframe
+                className="presentation-frame"
+                src="/portfolio/english_presentation/friends-presentation.html"
+                title={activeDemo[dataLang].title}
+                allowFullScreen
+                onLoad={(event) => {
+                  event.currentTarget.contentWindow?.addEventListener('keydown', (iframeEvent) => {
+                    if (iframeEvent.key === 'Escape') closeModal()
+                  })
+                }}
+              />
+            ) : activeDemo.type === 'interactive' ? (
+              <>
+                <p className="eyebrow"><span />{activeDemo[dataLang].label}</p>
+                <h2>{activeDemo[dataLang].title}</h2>
               <MiniQuiz lang={lang} />
+              </>
             ) : (
-              <div className={`demo-placeholder ${activeDemo.type}`}>
-                <strong>{lang === 'kk' ? 'Демонстрация дайындалуда' : 'Демонстрация в разработке'}</strong>
-              </div>
+              <>
+                <p className="eyebrow"><span />{activeDemo[dataLang].label}</p>
+                <h2>{activeDemo[dataLang].title}</h2>
+                <div className={`demo-placeholder ${activeDemo.type}`}>
+                  <strong>{lang === 'kk' ? 'Демонстрация дайындалуда' : 'Демонстрация в разработке'}</strong>
+                </div>
+              </>
             )}
           </div>
         </div>

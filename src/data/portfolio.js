@@ -1,15 +1,19 @@
 export const portfolioItems = [
   {
-    id: 'circulatory',
+    id: 'friends-presentation',
     type: 'presentation',
     accent: 'blue',
+    preview: '/portfolio/english_presentation/friends-presentation-preview.svg',
+    presentationModal: true,
     kz: {
-      title: 'Қанайналым жүйесі',
-      label: 'Презентация үлгісі',
+      title: 'Достар туралы сөйлесу',
+      description: 'OyanLab демонстрациялық ағылшын тілі сабағы.',
+      label: 'OyanLab · Демонстрациялық жоба',
     },
     ru: {
-      title: 'Кровеносная система',
-      label: 'Пример презентации',
+      title: 'Разговор о друзьях',
+      description: 'Демонстрационный проект урока английского языка OyanLab.',
+      label: 'OyanLab · Демонстрационный проект',
     },
   },
   {

@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Talking about Friends — presentation sample</title>
+<style>
+:root{--nv:#1F3A5F;--or:#E8590C;--bg:#F7F5EF;--soft:#E3EAF3;--bl:#8FB3D9;--ease:cubic-bezier(.2,.8,.2,1)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:#F3F4F8;font-family:"Segoe UI",Nunito,Arial,sans-serif;color:var(--nv);-webkit-user-select:none;user-select:none}
+#stage{position:absolute;left:50%;top:50%;width:1280px;height:552px;overflow:hidden;background:linear-gradient(135deg,#FBFAF6,#EAF0F8);transform-origin:center}
+.blob{position:absolute;border-radius:50%;filter:blur(46px);opacity:.55;animation:drift 16s ease-in-out infinite alternate}
+.s{position:absolute;inset:0;padding:28px 64px;opacity:0;visibility:hidden;transition:opacity .6s,visibility .6s}
+.s.on{opacity:1;visibility:visible}
+[data-t]{opacity:0;transform:translateY(20px) scale(.96);transition:opacity .7s var(--ease),transform .8s var(--ease)}
+.in{opacity:1!important;transform:none!important}
+h2{font-size:46px;font-weight:800;letter-spacing:-.5px}
+.hd{display:flex;justify-content:space-between;align-items:center;height:70px;margin-bottom:8px}
+em{font-style:normal;color:var(--or);font-weight:800}
+.kd{width:100%;height:auto;display:block;animation:bob 3.4s ease-in-out infinite}
+.ey{transform-origin:200px 192px;animation:blink 4.2s infinite}
+.wv{transform-origin:300px 355px;animation:wv 1.5s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-7px)}}
+@keyframes blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+@keyframes wv{50%{transform:rotate(-16deg)}}
+@keyframes drift{to{transform:translate(60px,-40px) scale(1.15)}}
+@keyframes fl{50%{transform:translateY(-14px)}}
+@keyframes pop{0%{opacity:0;transform:translateY(14px) scale(.92)}100%{opacity:1;transform:none}}
+@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+@keyframes draw{to{stroke-dashoffset:0}}
+.pop{animation:pop .6s var(--ease)}
+/* 1 title */
+.chip{display:inline-block;background:var(--nv);color:#fff;border-radius:30px;padding:8px 24px;font-size:26px;font-weight:700}
+.t1{position:absolute;left:64px;top:84px;width:640px}
+.t1 h1{font-size:78px;line-height:1.02;font-weight:900;letter-spacing:-1.5px;margin:22px 0 20px}
+.t1 p{font-size:34px;line-height:1.3}
+.pair{position:absolute;left:700px;top:30px;width:520px;height:490px}
+.pair .disc{position:absolute;left:40px;top:50px;width:440px;height:440px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#B9D0EA,#8FB3D9);animation:fl 7s ease-in-out infinite}
+.kw{position:absolute;width:250px;bottom:20px}
+.fbw{position:absolute}
+.fb{background:#fff;border-radius:40px;padding:8px 28px;font-size:34px;font-weight:800;box-shadow:0 10px 26px rgba(31,58,95,.18);animation:fl 5s ease-in-out infinite}
+/* 2 words */
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin-top:6px}
+.cd{background:#fff;border-radius:22px;padding:10px 8px 14px;text-align:center;box-shadow:0 10px 28px rgba(31,58,95,.1);transition:transform .5s var(--ease),box-shadow .5s,outline-color .5s;outline:3px solid transparent}
+.cd.hl{transform:translateY(-10px) scale(1.04)!important;box-shadow:0 18px 38px rgba(232,89,12,.28);outline-color:var(--or)}
+.cd .w{font-size:38px;font-weight:800;margin-top:4px;transition:color .4s}.cd.hl .w{color:var(--or)}
+.cd .p{font-size:22px;opacity:.7}
+#sp{margin:22px auto 0;width:max-content;max-width:100%;background:var(--nv);color:#fff;border-radius:50px;padding:12px 40px;font-size:36px;font-weight:600}
+#sp em{color:#FFB27A}
+/* 3 grammar */
+.row{display:flex;align-items:flex-start;justify-content:center;gap:26px;margin-top:46px}
+.col{display:flex;flex-direction:column;align-items:center;gap:16px}
+.tk{font-size:64px;font-weight:800;border-radius:26px;padding:12px 30px;text-align:center;box-shadow:0 12px 28px rgba(31,58,95,.14)}
+.nm{background:#fff;min-width:210px}.is{background:var(--or);color:#fff}.aj{background:var(--soft);min-width:340px}
+.an{font-size:56px;color:var(--or);font-weight:800;padding-top:16px}
+.lab{font-size:26px;font-weight:600;opacity:.75}
+.note{margin-top:44px;text-align:center;font-size:40px}
+.note s{color:var(--or);text-decoration-thickness:4px}
+/* 4 practice */
+#sc{background:var(--or);color:#fff;border-radius:30px;padding:6px 24px;font-size:32px;font-weight:800;transition:transform .4s var(--ease)}
+.q{display:flex;align-items:center;gap:22px;height:116px;background:#fff;border-radius:24px;padding:0 26px;margin-bottom:12px;box-shadow:0 8px 24px rgba(31,58,95,.1)}
+.q .kk{width:100px;flex:none}.q .sn{font-size:46px;font-weight:700;flex:1}
+.bl{display:inline-block;min-width:190px;border-bottom:5px solid var(--nv);text-align:center;margin:0 6px;color:var(--or);font-weight:800;height:58px}
+.op{font:700 36px "Segoe UI",Arial,sans-serif;color:var(--nv);background:#fff;border:3px solid var(--nv);border-radius:40px;padding:8px 30px;cursor:pointer;transition:transform .3s var(--ease),background .3s,color .3s,opacity .3s}
+.op:hover{transform:translateY(-4px)}.op.ok{background:var(--or);border-color:var(--or);color:#fff}.op.no{opacity:.3;animation:shake .4s}.q.done .op:not(.ok){opacity:.25;pointer-events:none}
+/* 5 speaking */
+.kl{position:absolute;left:50px;top:100px;width:520px;height:420px}
+.bub{position:absolute;top:0;max-width:260px;background:#fff;border-radius:22px;padding:12px 20px;font-size:28px;font-weight:700;box-shadow:0 10px 26px rgba(31,58,95,.14);line-height:1.2}
+.bub:after{content:"";position:absolute;bottom:-14px;left:44px;border:14px solid transparent;border-top-color:#fff;border-bottom:0}
+.kr{position:absolute;left:640px;top:120px;width:580px}
+.ringw{display:flex;align-items:center;gap:30px}
+.ringw svg{width:170px;height:170px;flex:none}
+.ring{fill:none;stroke:var(--or);stroke-width:14;stroke-linecap:round;stroke-dasharray:377;stroke-dashoffset:377;transition:stroke-dashoffset .7s var(--ease);transform:rotate(-90deg);transform-origin:70px 70px}
+#num{font-size:56px;font-weight:900;fill:var(--nv);text-anchor:middle}
+.fr{font-size:46px;font-weight:700;line-height:1.15}
+.ch{display:inline-block;background:var(--or);color:#fff;border-radius:40px;padding:2px 24px;font-size:38px;font-weight:800;margin:6px 4px 0 0}
+/* 6 recap */
+.ck{display:flex;align-items:center;gap:26px;background:#fff;border-radius:24px;height:92px;padding:0 30px;margin-bottom:14px;font-size:42px;font-weight:700;box-shadow:0 8px 24px rgba(31,58,95,.1)}
+.ck svg{width:56px;height:56px;flex:none}.ck circle{fill:var(--or)}
+.ck path{fill:none;stroke:#fff;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:40;stroke-dashoffset:40}
+.in .ck path,.ck.in path{animation:draw .7s .35s forwards}
+.ex{margin-top:10px;display:inline-block;background:var(--nv);color:#fff;border-radius:50px;padding:12px 40px;font-size:38px;font-weight:700}
+.ex em{color:#FFB27A}
+/* ui */
+#bar{position:absolute;left:0;top:0;height:5px;background:var(--or);width:0;z-index:5}
+#dots{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:12px;z-index:5}
+#dots i{width:12px;height:12px;border-radius:12px;background:#B8C7DC;cursor:pointer;transition:all .4s var(--ease)}#dots i.on{background:var(--or);width:34px}
+.nv{position:absolute;top:50%;margin-top:-24px;width:48px;height:48px;border-radius:50%;border:0;background:rgba(31,58,95,.85);color:#fff;cursor:pointer;z-index:6;opacity:0;transition:opacity .3s}
+#stage:hover .nv{opacity:.9}.nv svg{width:22px;height:22px;stroke:#fff;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
+#pv{left:10px}#nx{right:10px}
+#pp{position:absolute;right:16px;bottom:8px;width:32px;height:32px;border:0;border-radius:50%;background:rgba(31,58,95,.1);cursor:pointer;z-index:6;color:var(--nv);font-size:13px;font-weight:800}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-iteration-count:1!important;transition-duration:.01s!important}}
+</style></head><body>
+<div id="stage">
+<div class="blob" style="width:380px;height:380px;background:#CFE0F5;left:-80px;top:-100px"></div>
+<div class="blob" style="width:340px;height:340px;background:#FFD9BF;right:-60px;bottom:-120px;animation-delay:-6s"></div>
+<div id="bar"></div>
+
+<section class="s">
+ <div class="t1"><span class="chip" data-t="200">Grade 5 · A1 · 20 min</span>
+ <h1 data-t="500">Talking about Friends</h1>
+ <p data-t="1100">Today I can tell about my friend using <em>5&nbsp;adjectives</em>.</p></div>
+ <div class="pair"><div class="disc" data-t="100"></div>
+  <div class="kw" style="left:20px" data-t="500" data-kid="anna,o,s,friendly"></div>
+  <div class="kw" style="right:20px" data-t="800" data-kid="tom,l,l"></div>
+  <div class="fbw" style="left:0;top:90px" data-t="1400"><div class="fb">kind</div></div>
+  <div class="fbw" style="right:0;top:50px" data-t="1700"><div class="fb" style="animation-delay:-2s">funny</div></div>
+  <div class="fbw" style="left:210px;top:0" data-t="2000"><div class="fb" style="animation-delay:-3.5s">clever</div></div></div>
+</section>
+
+<section class="s">
+ <div class="hd"><h2 data-t="100">New words</h2></div>
+ <div class="grid" id="grid"></div>
+ <div id="sp" data-t="1300"></div>
+</section>
+
+<section class="s">
+ <div class="hd"><h2 data-t="100">How to say it</h2></div>
+ <div class="row">
+  <div class="col" data-t="500"><div class="tk nm"><span id="nm">Anna</span></div><span class="lab">name / he / she</span></div>
+  <div class="col" data-t="1200"><div class="tk is">is</div><span class="lab">always “is”</span></div>
+  <div class="col" data-t="1900"><div class="tk aj"><span id="aj">kind</span></div><span class="lab">adjective</span></div>
+  <div class="an" data-t="3000">and</div>
+  <div class="col" data-t="3300"><div class="tk aj" style="min-width:0">tall</div><span class="lab">one more!</span></div>
+ </div>
+ <div class="note" data-t="4000">No “a”: <s>She is a kind.</s> &nbsp;<em>She is kind.</em></div>
+</section>
+
+<section class="s">
+ <div class="hd"><h2 data-t="100">Choose!</h2><div id="sc">0 / 3</div></div>
+ <div id="qs"></div>
+</section>
+
+<section class="s">
+ <div class="hd"><h2 data-t="100">Your turn!</h2></div>
+ <div class="kl">
+  <div class="bub" style="left:0" data-t="1000">My friend is <em>kind</em>.</div>
+  <div class="bub" style="left:290px" data-t="1800">She is <em>funny</em> and <em>clever</em>!</div>
+  <div class="kw" style="left:0;width:230px" data-t="400" data-kid="anna,o,s"></div>
+  <div class="kw" style="left:290px;width:230px" data-t="700" data-kid="mia,o,s"></div>
+ </div>
+ <div class="kr">
+  <div class="ringw" data-t="600">
+   <svg viewBox="0 0 140 140"><circle cx="70" cy="70" r="60" fill="none" stroke="#DCE5F1" stroke-width="14"/><circle class="ring" id="ring" cx="70" cy="70" r="60"/><text id="num" x="70" y="90">0</text></svg>
+   <div class="fr">Dana is&hellip;<div id="chs"></div></div>
+  </div>
+ </div>
+</section>
+
+<section class="s">
+ <div class="hd"><h2 data-t="100">I can&hellip;</h2></div>
+ <div class="ck" data-t="500"><svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="28"/><path d="M15 29l9 9 17-19"/></svg>describe a friend with adjectives</div>
+ <div class="ck" data-t="1500"><svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="28"/><path d="M15 29l9 9 17-19"/></svg>say <em>He / She is</em> + adjective</div>
+ <div class="ck" data-t="2500"><svg viewBox="0 0 56 56"><circle cx="28" cy="28" r="28"/><path d="M15 29l9 9 17-19"/></svg>link ideas with <em>and</em></div>
+ <div class="ex" data-t="3600">Exit ticket: My friend is <em>___</em> and <em>___</em>.</div>
+</section>
+
+<button class="nv" id="pv" aria-label="Previous"><svg viewBox="0 0 24 24"><path d="M15 4l-8 8 8 8"/></svg></button>
+<button class="nv" id="nx" aria-label="Next"><svg viewBox="0 0 24 24"><path d="M9 4l8 8-8 8"/></svg></button>
+<div id="dots"></div><button id="pp" aria-label="Pause">II</button>
+</div>
+<script>
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const N='1F3A5F',R=s=>s.replace(/\*(.+?)\*/g,'<em>$1</em>');
+const K={anna:['F2C9A0','5A3825','E8590C'],tom:['D9A066','1B1B1B',N],mia:['F2C9A0','C97B3A','8FB3D9'],ben:['F6D7B5','8B5A2B','E8590C'],sara:['C68642','2B1B12',N],max:['E0AC69','2B2B2B','8FB3D9']};
+const st=`stroke="#${N}" stroke-width="8" fill="none" stroke-linecap="round"`;
+const EY={o:`<circle cx="168" cy="190" r="10" fill="#${N}"/><circle cx="232" cy="190" r="10" fill="#${N}"/>`,l:`<path d="M152 194Q168 172 184 194M216 194Q232 172 248 194" ${st}/>`,d:`<circle cx="168" cy="200" r="10" fill="#${N}"/><circle cx="232" cy="200" r="10" fill="#${N}"/>`};
+const MO={s:`<path d="M165 226Q200 262 235 226" ${st}/>`,l:`<path d="M158 220Q200 292 242 220Z" fill="#8A1C1C"/>`,n:''};
+const arm=(s,d)=>`<path d="${d}" stroke="#${s}" stroke-width="26" fill="none" stroke-linecap="round"/>`;
+const P={
+ kind:s=>arm(s,'M295 345Q335 335 348 295')+`<g transform="rotate(20 350 260)"><rect x="338" y="190" width="22" height="110" fill="#F4C430"/><polygon points="338,300 360,300 349,326" fill="#F2C9A0"/><rect x="338" y="180" width="22" height="14" fill="#E8590C"/></g>`,
+ funny:()=>`<ellipse cx="136" cy="222" rx="7" ry="11" fill="#8FB3D9"/><ellipse cx="264" cy="222" rx="7" ry="11" fill="#8FB3D9"/>`,
+ clever:()=>`<circle cx="330" cy="80" r="30" fill="#FFD166"/><rect x="318" y="108" width="24" height="16" rx="4" fill="#${N}"/><path d="M330 30V15M372 80H388M288 80H272M360 50L372 38M300 50L288 38" stroke="#FFD166" stroke-width="7" stroke-linecap="round"/><rect x="125" y="335" width="150" height="85" rx="8" fill="#${N}"/><rect x="133" y="343" width="64" height="70" fill="#F7F5EF"/><rect x="203" y="343" width="64" height="70" fill="#F7F5EF"/>`,
+ friendly:s=>`<g class="wv">${arm(s,'M300 355Q355 335 355 255')}<circle cx="355" cy="236" r="26" fill="#${s}"/></g>`,
+ shy:()=>`<circle cx="138" cy="222" r="15" fill="#F4A3A3"/><circle cx="262" cy="222" r="15" fill="#F4A3A3"/><rect x="128" y="228" width="144" height="92" rx="10" fill="#E8590C" transform="rotate(-6 200 274)"/>`,
+ tall:()=>`<path d="M358 30V400M338 52L358 30L378 52M338 378L358 400L378 378" stroke="#E8590C" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"/>`
+};
+function kid(n,e='o',m='s',p){const[s,h,t]=K[n];return`<svg viewBox="0 0 400 420" class="kd"><path d="M90 420Q90 305 200 305Q310 305 310 420Z" fill="#${t}"/><rect x="178" y="262" width="44" height="52" rx="14" fill="#${s}"/><circle cx="200" cy="185" r="88" fill="#${s}"/><path d="M112 185Q106 88 200 90Q294 88 288 185Q262 130 200 136Q138 130 112 185Z" fill="#${h}"/><g class="ey">${EY[e]}</g>${MO[m]}${p?P[p](s):''}</svg>`}
+$$('[data-kid]').forEach(el=>el.innerHTML=kid(...el.dataset.kid.split(',')));
+
+const W=[['kind','kaɪnd','Anna is *kind*. She helps me.','anna','o','s','kind'],['funny','ˈfʌni','Tom is *funny*. I laugh a lot.','tom','l','l','funny'],['clever','ˈklevə','Mia is *clever*. She reads a lot.','mia','o','s','clever'],['friendly','ˈfrendli','Ben is *friendly*. He says hello.','ben','o','s','friendly'],['shy','ʃaɪ','Sara is *shy*. She does not talk a lot.','sara','d','n','shy'],['tall','tɔːl','Max is *tall*. He plays basketball.','max','o','s','tall']];
+$('#grid').innerHTML=W.map((w,i)=>`<div class="cd" data-t="${300+i*160}">${kid(w[3],w[4],w[5],w[6])}<div class="w">${w[0]}</div><div class="p">/${w[1]}/</div></div>`).join('');
+
+const S=$$('.s'),NS=S.length,dur=[7,11,11,18,11,10];let cur=-1,el=0,playing=!matchMedia('(prefers-reduced-motion:reduce)').matches,tm=[];
+const T=(f,t)=>tm.push(setTimeout(f,t)),I=(f,t)=>tm.push(setInterval(f,t));
+$('#dots').innerHTML=S.map((_,i)=>`<i data-i="${i}"></i>`).join('');
+const rep=(e,h)=>{e.classList.remove('pop');void e.offsetWidth;e.innerHTML=h;e.classList.add('pop')};
+
+const hooks={
+1(){const c=$$('.cd'),sp=$('#sp');let k=0;const f=()=>{c.forEach((x,i)=>x.classList.toggle('hl',i===k));rep(sp,R(W[k][2]));k=(k+1)%6};T(()=>{f();I(f,1800)},1500)},
+2(){const p=[['Anna','kind'],['Tom','funny'],['Mia','clever'],['Ben','friendly'],['Sara','shy']];let i=0;T(()=>I(()=>{i=(i+1)%5;rep($('#nm'),p[i][0]);rep($('#aj'),p[i][1])},1900),3800)},
+3(){buildQ()},
+4(){setN(0);'kind,funny,clever,friendly,tall'.split(',').forEach((w,i)=>{T(()=>{const c=document.createElement('span');c.className='ch pop';c.textContent=w;$('#chs').appendChild(c);setN(i+1)},1200+i*850)})}};
+function setN(n){$('#ring').style.strokeDashoffset=377*(1-n/5);$('#num').textContent=n;if(!n)$('#chs').innerHTML=''}
+function buildQ(){let done=0;const Q=[['He','funny','shy','tom','l','l','funny'],['She','kind','tall','anna','o','s','kind'],['She','clever','funny','mia','o','s','clever']];
+ $('#sc').textContent='0 / 3';
+ $('#qs').innerHTML=Q.map((q,i)=>`<div class="q" data-t="${400+i*350}"><div class="kk">${kid(q[3],q[4],q[5],q[6])}</div><div class="sn">${q[0]} is<span class="bl"></span>.</div>${(i%2?[q[2],q[1]]:[q[1],q[2]]).map(w=>`<button class="op" data-w="${w}">${w}</button>`).join('')}</div>`).join('');
+ $$('#qs .q').forEach((row,i)=>$$('.op',row).forEach(b=>b.onclick=()=>{
+  if(row.classList.contains('done'))return;
+  if(b.dataset.w===Q[i][1]){b.classList.add('ok');$('.bl',row).textContent=b.dataset.w;row.classList.add('done');done++;$('#sc').textContent=done+' / 3';el=Math.max(0,el-4000)}
+  else{b.classList.remove('no');void b.offsetWidth;b.classList.add('no');el=Math.max(0,el-2000)}}));
+}
+function go(n){
+ tm.splice(0).forEach(x=>{clearTimeout(x);clearInterval(x)});
+ const prev=S[cur];if(prev){prev.classList.remove('on');setTimeout(()=>{if(S[cur]!==prev)$$('.in',prev).forEach(e=>e.classList.remove('in'))},700)}
+ cur=n;el=0;const s=S[n];s.classList.add('on');$$('.in',s).forEach(e=>e.classList.remove('in'));
+ if(hooks[n])hooks[n]();
+ void s.offsetWidth;$$('[data-t]',s).forEach(e=>T(()=>e.classList.add('in'),+e.dataset.t));
+ $$('#dots i').forEach((d,i)=>d.classList.toggle('on',i===n));
+}
+$('#nx').onclick=()=>go((cur+1)%NS);$('#pv').onclick=()=>go((cur+NS-1)%NS);
+$('#dots').onclick=e=>{if(e.target.dataset.i)go(+e.target.dataset.i)};
+$('#pp').onclick=function(){playing=!playing;this.textContent=playing?'II':'▶'};
+addEventListener('keydown',e=>{if(e.key==='ArrowRight')$('#nx').click();if(e.key==='ArrowLeft')$('#pv').click()});
+setInterval(()=>{if(!playing)return;el+=100;$('#bar').style.width=Math.min(100,el/(dur[cur]*10))+'%';if(el>=dur[cur]*1000)go((cur+1)%NS)},100);
+function fit(){const k=Math.min(innerWidth/1280,innerHeight/552);$('#stage').style.transform=`translate(-50%,-50%) scale(${k})`}
+addEventListener('resize',fit);fit();if(!playing)$('#pp').textContent='▶';go(0);
+</script></body></html>
