@@ -278,7 +278,14 @@ function App() {
               <article className={`service-card ${service.icon}`} key={service.id}>
                 <div className="service-top">
                   <span className="service-number">{service.number}</span>
-                  <div className={`service-icon ${service.icon}`} aria-hidden="true" />
+                  <div className={`service-icon ${service.icon}`} aria-hidden="true">
+                    <img
+                      src={service.illustration}
+                      alt=""
+                      width="105"
+                      height="105"
+                    />
+                  </div>
                 </div>
                 <h3>{service[dataLang].title}</h3>
                 <p>{service[dataLang].description}</p>

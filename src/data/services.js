@@ -3,6 +3,7 @@ export const services = [
     id: 'presentations',
     number: '01',
     icon: 'slides',
+    illustration: '/services/presentations.svg',
     kz: {
       title: 'Презентациялар',
       description: 'Күрделі тақырыптарды түсінікті әрі заманауи көрнекі форматта ұсынатын сабақ презентациялары.',
@@ -16,6 +17,7 @@ export const services = [
     id: 'interactive',
     number: '02',
     icon: 'game',
+    illustration: '/services/interactive.svg',
     kz: {
       title: 'Интерактивті тапсырмалар',
       description: 'Браузерде жұмыс істейтін викториналар, тесттер және шағын ойындар.',
@@ -29,6 +31,7 @@ export const services = [
     id: 'video',
     number: '03',
     icon: 'video',
+    illustration: '/services/video.svg',
     kz: {
       title: 'Білім беру бейнематериалдары',
       description: 'Күрделі ұғымдарды көрнекі суреттер мен анимациялар арқылы түсіндіретін бейнематериалдар.',
@@ -42,6 +45,7 @@ export const services = [
     id: 'kits',
     number: '04',
     icon: 'kit',
+    illustration: '/services/lesson-kit.svg',
     kz: {
       title: 'Сабақ жинақтары',
       description: 'Презентация, тапсырмалар, тесттер және қосымша ресурстардан тұратын дайын комплекттер.',
