@@ -82,12 +82,13 @@ em{font-style:normal;color:var(--or);font-weight:800}
 /* ui */
 #bar{position:absolute;left:0;top:0;height:5px;background:var(--or);width:0;z-index:5}
 #dots{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:12px;z-index:5}
-#dots i{width:12px;height:12px;border-radius:12px;background:#B8C7DC;cursor:pointer;transition:all .4s var(--ease)}#dots i.on{background:var(--or);width:34px}
+#dots i,#dots button{width:12px;height:12px;padding:0;border:0;border-radius:12px;background:#B8C7DC;cursor:pointer;transition:all .4s var(--ease)}#dots i.on,#dots button.on{background:var(--or);width:34px}
 .nv{position:absolute;top:50%;margin-top:-24px;width:48px;height:48px;border-radius:50%;border:0;background:rgba(31,58,95,.85);color:#fff;cursor:pointer;z-index:6;opacity:0;transition:opacity .3s}
 #stage:hover .nv{opacity:.9}.nv svg{width:22px;height:22px;stroke:#fff;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
 #pv{left:10px}#nx{right:10px}
 #pp{position:absolute;right:16px;bottom:8px;width:32px;height:32px;border:0;border-radius:50%;background:rgba(31,58,95,.1);cursor:pointer;z-index:6;color:var(--nv);font-size:13px;font-weight:800}
 @media (prefers-reduced-motion:reduce){*{animation-duration:.01s!important;animation-iteration-count:1!important;transition-duration:.01s!important}}
+@media (hover:none),(pointer:coarse){.nv{opacity:.9}}
 </style></head><body>
 <div id="stage">
 <div class="blob" style="width:380px;height:380px;background:#CFE0F5;left:-80px;top:-100px"></div>
@@ -181,7 +182,7 @@ $('#grid').innerHTML=W.map((w,i)=>`<div class="cd" data-t="${300+i*160}">${kid(w
 
 const S=$$('.s'),NS=S.length,dur=[7,11,11,18,11,10];let cur=-1,el=0,playing=!matchMedia('(prefers-reduced-motion:reduce)').matches,tm=[];
 const T=(f,t)=>tm.push(setTimeout(f,t)),I=(f,t)=>tm.push(setInterval(f,t));
-$('#dots').innerHTML=S.map((_,i)=>`<i data-i="${i}"></i>`).join('');
+$('#dots').innerHTML=S.map((_,i)=>`<button type="button" data-i="${i}" aria-label="Go to slide ${i+1}"></button>`).join('');
 const rep=(e,h)=>{e.classList.remove('pop');void e.offsetWidth;e.innerHTML=h;e.classList.add('pop')};
 
 const hooks={
@@ -204,7 +205,7 @@ function go(n){
  cur=n;el=0;const s=S[n];s.classList.add('on');$$('.in',s).forEach(e=>e.classList.remove('in'));
  if(hooks[n])hooks[n]();
  void s.offsetWidth;$$('[data-t]',s).forEach(e=>T(()=>e.classList.add('in'),+e.dataset.t));
- $$('#dots i').forEach((d,i)=>d.classList.toggle('on',i===n));
+ $$('#dots button').forEach((d,i)=>d.classList.toggle('on',i===n));
 }
 $('#nx').onclick=()=>go((cur+1)%NS);$('#pv').onclick=()=>go((cur+NS-1)%NS);
 $('#dots').onclick=e=>{if(e.target.dataset.i)go(+e.target.dataset.i)};

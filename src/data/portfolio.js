@@ -33,6 +33,7 @@ export const portfolioItems = [
     id: 'lesson-kit',
     type: 'kit',
     accent: 'mixed',
+    lessonKitModal: true,
     kz: {
       title: 'Сабаққа арналған жинақ',
       label: 'Демонстрациялық үлгі',

@@ -155,6 +155,8 @@ function App() {
   useEffect(() => {
     if (!activeDemo) return
 
+    const previousBodyOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
     closeModalRef.current?.focus()
 
     function handleModalKeyDown(event) {
@@ -167,7 +169,7 @@ function App() {
       if (event.key !== 'Tab' || !modalRef.current) return
 
       const focusable = [...modalRef.current.querySelectorAll(
-        'button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        'button:not([disabled]), iframe, a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
       )].filter((element) => !element.hidden)
 
       if (!focusable.length) {
@@ -188,7 +190,10 @@ function App() {
     }
 
     document.addEventListener('keydown', handleModalKeyDown)
-    return () => document.removeEventListener('keydown', handleModalKeyDown)
+    return () => {
+      document.removeEventListener('keydown', handleModalKeyDown)
+      document.body.style.overflow = previousBodyOverflow
+    }
   }, [activeDemo])
 
   function closeModal() {
@@ -307,7 +312,7 @@ function App() {
                           setActiveDemo(item)
                         }}
                       >
-                        <img src={item.preview} alt={item[dataLang].title} />
+                        <img src={item.preview} alt={item[dataLang].title} width="1280" height="552" />
                       </button>
                     ) : (
                       <div className="presentation-preview" />
@@ -321,9 +326,17 @@ function App() {
                     </div>
                   )}
                   {item.type === 'kit' && (
-                    <div className="kit-preview">
+                    <button
+                      type="button"
+                      className="kit-preview kit-preview-button"
+                      aria-label={item[dataLang].title}
+                      onClick={(event) => {
+                        demoTriggerRef.current = event.currentTarget
+                        setActiveDemo(item)
+                      }}
+                    >
                       <div>PDF</div><div>QUIZ</div><div>VIDEO</div>
-                    </div>
+                    </button>
                   )}
                 </div>
                 <div className="portfolio-meta">
@@ -390,7 +403,13 @@ function App() {
         <div className="modal-backdrop" role="presentation" onMouseDown={() => setActiveDemo(null)}>
           <div
             ref={modalRef}
-            className={activeDemo.presentationModal ? 'demo-modal presentation-modal' : 'demo-modal'}
+            className={
+              activeDemo.presentationModal
+                ? 'demo-modal presentation-modal'
+                : activeDemo.lessonKitModal
+                  ? 'demo-modal lesson-kit-modal'
+                  : 'demo-modal'
+            }
             role="dialog"
             aria-modal="true"
             aria-label={activeDemo[dataLang].title}
@@ -415,6 +434,8 @@ function App() {
                 <h2>{activeDemo[dataLang].title}</h2>
               <MiniQuiz lang={lang} />
               </>
+            ) : activeDemo.lessonKitModal ? (
+              <LessonKitModal lang={lang} />
             ) : (
               <>
                 <p className="eyebrow"><span />{activeDemo[dataLang].label}</p>
@@ -428,6 +449,341 @@ function App() {
         </div>
       )}
     </>
+  )
+}
+
+function LessonKitModal({ lang }) {
+  const [tab, setTab] = useState('plan')
+  const [quizAnswers, setQuizAnswers] = useState({})
+  const [quizChecked, setQuizChecked] = useState(false)
+  useEffect(() => {
+    setTab('plan')
+    setQuizAnswers({})
+    setQuizChecked(false)
+  }, [lang])
+  const copy = {
+    kk: {
+      subject: 'Ағылшын тілі · 5 сынып',
+      title: '«Достар туралы сөйлесу» сабағының жиынтығы',
+      intro: 'Ағылшын тілінен мұғалімге арналған презентация, жоспар, жұмыс парағы және білім тексеру жиынтығы.',
+      tabs: ['Сабақ жоспары', 'Презентация', 'Жұмыс парағы', 'Білім тексеру', 'Үй жұмысы'],
+      planTitle: 'Сабақ жоспары',
+      theme: 'Тақырыбы',
+      themeValue: 'Talking About Friends',
+      goalsTitle: 'Оқу мақсаттары',
+      goals: [
+        'Достарды сипаттайтын 6 жаңа сөзді қолдану.',
+        '“He / She is” құрылымымен сөйлем құрастыру.',
+        'And жалғауын қолданып сөйлемдерді байланыстыру.',
+      ],
+      outcomesTitle: 'Күтілетін нәтижелер',
+      outcomes: [
+        'Досының кем дегенде үш қасиетін айтады.',
+        'Тірек сөздер арқылы қысқа сипаттама құрайды.',
+        'Жаңа лексиканы толықтырып сөйлейді.',
+      ],
+      stagesTitle: 'Сабақ кезеңдері',
+      stages: [
+        ['1', 'Ұйымдастыру және қызығушылықты ояту', '3 мин', 'Суреттерге қарап тақырыпты болжауды сұрайды.', 'Суреттерді қарастырып болжам айтады.'],
+        ['2', 'Жаңа лексиканы меңгеру', '7 мин', 'Көрнекі суретпен 6 сөзді таныстырады.', 'Сөздерді қайталап, мағынасын түсінеді.'],
+        ['3', 'Сөйлем құрылымын түсіндіру', '5 мин', 'He / She is + adjective құрылымын көрсетеді.', 'Жекеше сөйлемдерді оқып, құрастырады.'],
+        ['4', 'Жұптық практика', '5 мин', 'Жұпқа достың суретін сипаттауды тапсырады.', 'And жалғауын қолдана отырып сөйлеседі.'],
+        ['5', 'Бекіту және қорытынды', '5 мин', 'Тест және үй тапсырмасын түсіндіреді.', 'Өз нәтижесін көреді және бағалау критерийін талдайды.'],
+      ],
+      teacher: 'Мұғалімнің әрекеті',
+      learners: 'Оқушылардың әрекеті',
+      presentationTitle: 'Презентация',
+      presentationText: '«Talking About Friends» тақырыбына дайын интерактивті слайдтар.',
+      worksheetTitle: 'Жұмыс парағы',
+      worksheetIntro: 'Лексиканы бекітуге арналған үш қысқа жаттығу.',
+      task1: '1. Сөйлемдерді тиісті сөздермен толықтыр',
+      worksheet1: [
+        ['Anna is ', 'kind', '. She helps me.'],
+        ['Tom is ', 'funny', '. He makes us laugh.'],
+        ['Mia is ', 'clever', '. She reads a lot.'],
+      ],
+      task2: '2. Сөздерді дұрыс сөйлемге айналдыр',
+      task2Hint: 'Достың есімі мен оның қасиетін байланыстырыңыз.',
+      task3: '3. Сөйлем құрастырыңыз',
+      quizTitle: 'Білім тексеру',
+      quizIntro: '6 сұраққа жауап беріп, тексеру батырмасын басыңыз.',
+      check: 'Жауаптарды тексеру',
+      reset: 'Қайталау',
+      correct: 'дұрыс',
+      score: 'Нәтиже',
+      homeworkTitle: 'Үй жұмысы және бағалау',
+      homework: 'Үйде достың суретін немесе досыңыз туралы 4 сөйлем жазып, 4 жаңа лексиканы қолданыңыз.',
+      rubricTitle: 'Бағалау критерийлері',
+      rubric: [
+        ['Лексика', '6 ұсынылған сөздің ішінде кемінде 4 сөзді пайдаланады.'],
+        ['Грамматика', 'He / She is құрылымы дұрыс қолданылады.'],
+        ['Жауаптың толықтығы', 'Түйіндейтін 4 сөйлем жазылады.'],
+      ],
+      answersTitle: 'Мұғалімге арналған жауаптар',
+      answers: ['Anna is kind.', 'Tom is funny.', 'Mia is clever.', 'He / She is tall / shy / friendly.'],
+      openPresentation: 'Презентацияны қарау',
+    },
+    ru: {
+      subject: 'Английский язык · 5 класс',
+      title: 'Комплект урока «Talking About Friends»',
+      intro: 'Готовый набор для учителя: план урока, презентация, рабочий лист и проверка знаний.',
+      tabs: ['План урока', 'Презентация', 'Рабочий лист', 'Проверка знаний', 'Домашнее задание'],
+      planTitle: 'План урока',
+      theme: 'Тема',
+      themeValue: 'Talking About Friends',
+      goalsTitle: 'Цели обучения',
+      goals: [
+        'Использовать 6 новых слов для описания друзей.',
+        'Составлять предложения по модели “He / She is”.',
+        'Связывать мысли с помощью союза And.',
+      ],
+      outcomesTitle: 'Ожидаемые результаты',
+      outcomes: [
+        'Называет минимум три качества друга.',
+        'Составляет краткое описание по опорным словам.',
+        'Использует новую лексику в устной речи.',
+      ],
+      stagesTitle: 'Этапы урока',
+      stages: [
+        ['1', 'Организация и мотивация', '3 мин', 'Предлагает предположить тему по картинкам.', 'Рассматривает картинки и высказывает предположения.'],
+        ['2', 'Введение новой лексики', '7 мин', 'Представляет 6 слов с наглядными примерами.', 'Повторяет слова и понимает их значение.'],
+        ['3', 'Объяснение грамматической модели', '5 мин', 'Показывает модель He / She is + adjective.', 'Читает и составляет предложения в единственном числе.'],
+        ['4', 'Парная работа', '5 мин', 'Просит описать друга по опорным словам.', 'Использует And для объединения характеристик.'],
+        ['5', 'Закрепление и итог', '5 мин', 'Проводит тест и объясняет домашнее задание.', 'Проверяет результат и знакомится с критериями.'],
+      ],
+      teacher: 'Действия учителя',
+      learners: 'Действия учеников',
+      presentationTitle: 'Презентация',
+      presentationText: 'Готовые интерактивные слайды по теме «Talking About Friends».',
+      worksheetTitle: 'Рабочий лист',
+      worksheetIntro: 'Три коротких упражнения для закрепления лексики.',
+      task1: '1. Дополните предложения словами',
+      worksheet1: [
+        ['Anna is ', 'kind', '. She helps me.'],
+        ['Tom is ', 'funny', '. He makes us laugh.'],
+        ['Mia is ', 'clever', '. She reads a lot.'],
+      ],
+      task2: '2. Составьте словосочетания в предложениях',
+      task2Hint: 'Свяжите имя друга с подходящей характеристикой.',
+      task3: '3. Составьте предложение',
+      quizTitle: 'Проверка знаний',
+      quizIntro: 'Ответьте на 6 вопросов и нажмите «Проверить».',
+      check: 'Проверить ответы',
+      reset: 'Повторить',
+      correct: 'правильно',
+      score: 'Результат',
+      homeworkTitle: 'Домашнее задание и оценивание',
+      homework: 'Нарисуйте друга или напишите о нём 4 предложения, используя минимум 4 изученных слова.',
+      rubricTitle: 'Критерии оценивания',
+      rubric: [
+        ['Лексика', 'Использовано минимум 4 из 6 изученных слов.'],
+        ['Грамматика', 'Верно использована модель He / She is.'],
+        ['Полнота ответа', 'Написано 4 связных предложения.'],
+      ],
+      answersTitle: 'Ответы для учителя',
+      answers: ['Anna is kind.', 'Tom is funny.', 'Mia is clever.', 'He / She is tall / shy / friendly.'],
+      openPresentation: 'Открыть презентацию',
+    },
+  }
+  const c = copy[lang]
+  const questions = lang === 'kk'
+    ? [
+        ['Anna кімге көмектеседі?', ['kind', 'tall', 'shy'], 'kind'],
+        ['Кім күлдіреді?', ['funny', 'clever', 'shy'], 'funny'],
+        ['Кім көп оқиды?', ['tall', 'clever', 'friendly'], 'clever'],
+        ['Қай сөйлем дұрыс құрылған?', ['Anna kind', 'Привет, как дела?', 'She is kind'], 'She is kind'],
+        ['She is tall means…', ['She — ұзын', 'She — ақылды', 'She — ұялшақ'], 'She — ұзын'],
+        ['Қай сөз and жалғауын қажет етеді?', ['She is kind and funny', 'Kind.', 'Is she kind'], 'She is kind and funny'],
+      ]
+    : [
+        ['Кто помогает другим?', ['kind', 'tall', 'shy'], 'kind'],
+        ['Кто смешит друзей?', ['funny', 'clever', 'shy'], 'funny'],
+        ['Кто много читает?', ['tall', 'clever', 'friendly'], 'clever'],
+        ['Какое предложение составлено верно?', ['Anna kind', 'Привет, как дела?', 'She is kind'], 'She is kind'],
+        ['Что означает “She is tall”?', ['Она высокая', 'Она умная', 'Она стесняется'], 'Она высокая'],
+        ['В каком предложении верно использован союз and?', ['She is kind and funny', 'Kind.', 'Is she kind'], 'She is kind and funny'],
+      ]
+
+  const checkedCount = questions.filter((_, index) => quizAnswers[index] === questions[index][2]).length
+  const allAnswered = Object.keys(quizAnswers).length === questions.length
+
+  return (
+    <div className="lesson-kit-content">
+      <header className="lesson-kit-header">
+        <p className="eyebrow"><span />{c.subject}</p>
+        <h2>{c.title}</h2>
+        <p>{c.intro}</p>
+      </header>
+
+      <nav className="lesson-kit-tabs" role="tablist" aria-label={lang === 'kk' ? 'Сабақ жиынтығы бөлімі' : 'Разделы комплекта урока'}>
+        {c.tabs.map((label, index) => {
+          const names = ['plan', 'presentation', 'worksheet', 'quiz', 'homework']
+          return (
+            <button
+              type="button"
+              key={names[index]}
+              role="tab"
+              id={`lesson-kit-tab-${names[index]}`}
+              aria-controls={`lesson-kit-panel-${names[index]}`}
+              className={tab === names[index] ? 'active' : ''}
+              aria-selected={tab === names[index]}
+              onClick={() => setTab(names[index])}
+            >
+              <span>0{index + 1}</span>{label}
+            </button>
+          )
+        })}
+      </nav>
+
+      <div
+        className="lesson-kit-scroll"
+        id={`lesson-kit-panel-${tab}`}
+        role="tabpanel"
+        aria-labelledby={`lesson-kit-tab-${tab}`}
+      >
+        {tab === 'plan' && (
+          <section className="lesson-kit-section">
+            <h3>{c.planTitle}</h3>
+            <div className="lesson-kit-overview">
+              <div><small>{c.theme}</small><strong>{c.themeValue}</strong></div>
+              <div><small>{lang === 'kk' ? 'Ұзақтығы' : 'Продолжительность'}</small><strong>25 {lang === 'kk' ? 'минут' : 'минут'}</strong></div>
+            </div>
+            <div className="lesson-kit-columns">
+              <div className="lesson-kit-list-card">
+                <h4>{c.goalsTitle}</h4>
+                <ul>{c.goals.map((goal) => <li key={goal}>{goal}</li>)}</ul>
+              </div>
+              <div className="lesson-kit-list-card">
+                <h4>{c.outcomesTitle}</h4>
+                <ul>{c.outcomes.map((outcome) => <li key={outcome}>{outcome}</li>)}</ul>
+              </div>
+            </div>
+            <h4 className="lesson-kit-subtitle">{c.stagesTitle}</h4>
+            <div className="lesson-stage-list">
+              {c.stages.map(([number, name, time, teacher, learner]) => (
+                <article className="lesson-stage" key={number}>
+                  <span className="lesson-stage-number">{number}</span>
+                  <div className="lesson-stage-main">
+                    <div className="lesson-stage-heading"><h5>{name}</h5><strong>{time}</strong></div>
+                    <div className="lesson-stage-actions">
+                      <p><small>{c.teacher}</small>{teacher}</p>
+                      <p><small>{c.learners}</small>{learner}</p>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+        )}
+
+        {tab === 'presentation' && (
+          <section className="lesson-kit-section">
+            <div className="lesson-material-heading">
+              <div><h3>{c.presentationTitle}</h3><p>{c.presentationText}</p></div>
+            </div>
+            <iframe
+              className="lesson-kit-presentation"
+              src="/portfolio/english_presentation/friends-presentation.html"
+              title={c.presentationTitle}
+            />
+          </section>
+        )}
+
+        {tab === 'worksheet' && (
+          <section className="lesson-kit-section">
+            <h3>{c.worksheetTitle}</h3>
+            <p className="lesson-kit-intro">{c.worksheetIntro}</p>
+            <div className="worksheet-card">
+              <h4>{c.task1}</h4>
+              {c.worksheet1.map(([start, answer, end], index) => (
+                <label className="worksheet-sentence" key={answer}>
+                  {start}
+                  <input
+                    className="worksheet-answer"
+                    aria-label={`${lang === 'kk' ? 'Жауап' : 'Ответ'} ${index + 1}`}
+                    placeholder="..."
+                  />
+                  {end}
+                </label>
+              ))}
+              <p className="worksheet-note">{lang === 'kk' ? 'Дұрыс сөздер: kind · funny · clever' : 'Слова для ответов: kind · funny · clever'}</p>
+            </div>
+            <div className="worksheet-grid">
+              <div className="worksheet-card">
+                <h4>{c.task2}</h4>
+                <p>{c.task2Hint}</p>
+                <div className="worksheet-options"><span>She</span><strong>is</strong><span>kind</span><strong>and</strong><span>funny</span></div>
+              </div>
+              <div className="worksheet-card">
+                <h4>{c.task3}</h4>
+                <div className="worksheet-writing"><span>{lang === 'kk' ? 'Менің досым' : 'Мой друг'}</span><span>is</span><span>{lang === 'kk' ? 'және' : 'and'}</span><i /></div>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {tab === 'quiz' && (
+          <section className="lesson-kit-section">
+            <h3>{c.quizTitle}</h3>
+            <p className="lesson-kit-intro">{c.quizIntro}</p>
+            <div className="lesson-kit-quiz">
+              {questions.map(([question, options, answer], index) => (
+                <fieldset className="lesson-quiz-question" key={question}>
+                  <legend><span>{index + 1}</span>{question}</legend>
+                  <div>
+                    {options.map((option) => (
+                      <label
+                        key={option}
+                        className={
+                          quizChecked && quizAnswers[index] === option
+                            ? option === answer ? 'quiz-option correct' : 'quiz-option wrong'
+                            : quizChecked && option === answer
+                              ? 'quiz-option correct'
+                            : 'quiz-option'
+                        }
+                      >
+                        <input
+                          type="radio"
+                          name={`lesson-question-${index}`}
+                          checked={quizAnswers[index] === option}
+                          onChange={() => setQuizAnswers((current) => ({ ...current, [index]: option }))}
+                        />
+                        <span>{option}</span>
+                      </label>
+                    ))}
+                  </div>
+                </fieldset>
+              ))}
+            </div>
+            <div className="lesson-kit-quiz-actions">
+              {quizChecked && <strong className="lesson-kit-score" role="status" aria-live="polite">{c.score}: {checkedCount} / {questions.length}</strong>}
+              <button type="button" className="lesson-kit-secondary" onClick={() => { setQuizAnswers({}); setQuizChecked(false) }}>{c.reset}</button>
+              <button type="button" className="lesson-kit-primary" disabled={!allAnswered} onClick={() => setQuizChecked(true)}>{c.check}</button>
+            </div>
+          </section>
+        )}
+
+        {tab === 'homework' && (
+          <section className="lesson-kit-section">
+            <h3>{c.homeworkTitle}</h3>
+            <div className="homework-card">
+              <span>01</span>
+              <div><h4>{lang === 'kk' ? 'Практикалық тапсырма' : 'Практическое задание'}</h4><p>{c.homework}</p></div>
+            </div>
+            <h4 className="lesson-kit-subtitle">{c.rubricTitle}</h4>
+            <div className="rubric-list">
+              {c.rubric.map(([name, description]) => (
+                <div key={name}><strong>{name}</strong><p>{description}</p></div>
+              ))}
+            </div>
+            <details className="teacher-answers">
+              <summary>{c.answersTitle}</summary>
+              <ul>{c.answers.map((answer) => <li key={answer}>{answer}</li>)}</ul>
+            </details>
+          </section>
+        )}
+      </div>
+    </div>
   )
 }
 

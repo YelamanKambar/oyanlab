@@ -157,6 +157,76 @@ footer > a:last-child { width:40px;height:40px;display:grid;place-items:center;b
 .mini-quiz button.correct { border-color:#24a66a;background:#def7ea; }
 .mini-quiz button.wrong { border-color:#d64b67;background:#fde6eb; }
 .mini-quiz strong { margin-top:8px;color:#14734b; }
+.kit-preview-button { width:100%;height:100%;border:0;cursor:pointer; }
+.lesson-kit-modal { width:min(1180px,100%);height:min(780px,calc(100vh - 40px));padding:0;overflow:hidden; }
+.lesson-kit-modal .modal-close { z-index:20;top:14px;right:16px;padding:7px 9px;border-radius:4px;background:rgba(11,21,48,.92);color:var(--white); }
+.lesson-kit-content { height:100%;display:flex;flex-direction:column; }
+.lesson-kit-header { padding:28px 70px 20px 38px;border-bottom:1px solid var(--line); }
+.lesson-kit-header .eyebrow { margin:0 0 10px; }
+.lesson-kit-header h2 { margin:0 0 8px;padding-right:0;font-size:32px; }
+.lesson-kit-header > p:last-child { margin:0;color:var(--muted);line-height:1.55; }
+.lesson-kit-tabs { display:flex;gap:6px;padding:12px 38px;border-bottom:1px solid var(--line);overflow-x:auto; }
+.lesson-kit-tabs button { flex:none;display:flex;align-items:center;gap:8px;min-height:42px;padding:9px 12px;border:1px solid var(--line);border-radius:4px;background:transparent;color:var(--muted);font-size:13px;font-weight:800; }
+.lesson-kit-tabs button span { color:var(--blue);font-size:11px; }
+.lesson-kit-tabs button.active { background:rgba(19,184,245,.1);border-color:rgba(19,184,245,.5);color:var(--white); }
+.lesson-kit-scroll { min-height:0;flex:1;overflow-y:auto;padding:28px 38px 38px; }
+.lesson-kit-section h3 { margin:0 0 18px;font-size:26px; }
+.lesson-kit-overview { display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px; }
+.lesson-kit-overview div { display:flex;flex-direction:column;gap:5px;padding:18px;border:1px solid var(--line);background:rgba(245,247,252,.025); }
+.lesson-kit-overview small,.lesson-stage-actions small { color:var(--blue);font-weight:800; }
+.lesson-kit-columns { display:grid;grid-template-columns:1fr 1fr;gap:12px; }
+.lesson-kit-list-card { padding:18px;border:1px solid var(--line); }
+.lesson-kit-list-card h4,.lesson-kit-subtitle { margin:0 0 12px;font-size:17px; }
+.lesson-kit-list-card ul,.teacher-answers ul { margin:0;padding-left:18px;color:var(--muted);line-height:1.7; }
+.lesson-kit-subtitle { margin-top:24px; }
+.lesson-stage-list { display:grid;gap:8px; }
+.lesson-stage { display:grid;grid-template-columns:44px 1fr;gap:12px;padding:14px;border:1px solid var(--line); }
+.lesson-stage-number { width:36px;height:36px;display:grid;place-items:center;border-radius:50%;background:var(--blue);color:var(--navy);font-weight:900; }
+.lesson-stage-heading { display:flex;justify-content:space-between;gap:12px; }
+.lesson-stage-heading h5 { margin:0;font-size:16px; }
+.lesson-stage-heading strong { color:var(--blue);white-space:nowrap;font-size:13px; }
+.lesson-stage-actions { display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px; }
+.lesson-stage-actions p { display:flex;flex-direction:column;gap:4px;margin:0;color:var(--muted);font-size:13px;line-height:1.45; }
+.lesson-material-heading h3 { margin-bottom:6px; }
+.lesson-material-heading p,.lesson-kit-intro { margin:0 0 16px;color:var(--muted); }
+.lesson-kit-presentation { width:100%;height:min(620px,calc(100vh - 260px));min-height:420px;border:1px solid var(--line);border-radius:4px;background:#f3f4f8; }
+.worksheet-card { margin-bottom:12px;padding:18px;border:1px solid var(--line);background:rgba(245,247,252,.025); }
+.worksheet-card h4 { margin:0 0 14px;font-size:17px; }
+.worksheet-sentence { display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin:10px 0;color:var(--muted); }
+.worksheet-answer { width:110px;height:38px;padding:7px 9px;border:0;border-bottom:2px solid var(--blue);border-radius:0;background:rgba(245,247,252,.08);color:var(--white); }
+.worksheet-answer::placeholder { color:var(--muted); }
+.worksheet-note { margin:14px 0 0;color:var(--blue);font-size:13px;font-weight:800; }
+.worksheet-grid { display:grid;grid-template-columns:1fr 1fr;gap:12px; }
+.worksheet-options { display:flex;align-items:center;gap:8px;flex-wrap:wrap;color:var(--muted); }
+.worksheet-options span { padding:7px 10px;border:1px solid var(--line);border-radius:4px;background:var(--white);color:var(--navy); }
+.worksheet-options strong { color:var(--blue); }
+.worksheet-writing { display:flex;align-items:center;flex-wrap:wrap;gap:8px;color:var(--muted); }
+.worksheet-writing i { width:100%;height:38px;border-bottom:2px solid var(--blue); }
+.lesson-kit-quiz { display:grid;grid-template-columns:1fr 1fr;gap:10px; }
+.lesson-quiz-question { min-width:0;margin:0;padding:14px;border:1px solid var(--line);color:var(--white); }
+.lesson-quiz-question legend { padding:0 6px;font-weight:800;font-size:14px; }
+.lesson-quiz-question legend span { display:inline-grid;width:24px;height:24px;margin-right:8px;place-items:center;border-radius:50%;background:var(--blue);color:var(--navy); }
+.lesson-quiz-question > div { display:grid;gap:7px;margin-top:10px; }
+.quiz-option { display:flex;align-items:center;gap:8px;padding:9px;border:1px solid var(--line);border-radius:4px;color:var(--muted);cursor:pointer; }
+.quiz-option input { accent-color:var(--blue); }
+.quiz-option.correct { border-color:#24a66a;background:rgba(36,166,106,.12);color:var(--white); }
+.quiz-option.wrong { border-color:#d64b67;background:rgba(214,75,103,.12); }
+.lesson-kit-quiz-actions { display:flex;align-items:center;justify-content:flex-end;gap:10px;margin-top:16px; }
+.lesson-kit-score { margin-right:auto;color:var(--blue); }
+.lesson-kit-primary,.lesson-kit-secondary { min-height:42px;padding:9px 14px;border:1px solid var(--blue);border-radius:4px;font-weight:800; }
+.lesson-kit-primary { background:var(--blue);color:var(--navy); }
+.lesson-kit-primary:disabled { opacity:.45;cursor:not-allowed; }
+.lesson-kit-secondary { background:transparent;color:var(--white);border-color:var(--line); }
+.homework-card { display:grid;grid-template-columns:44px 1fr;gap:14px;padding:18px;border:1px solid var(--line); }
+.homework-card > span { width:36px;height:36px;display:grid;place-items:center;border-radius:50%;background:var(--purple);font-weight:900; }
+.homework-card h4 { margin:0 0 6px; }
+.homework-card p { margin:0;color:var(--muted);line-height:1.55; }
+.rubric-list { display:grid;grid-template-columns:repeat(3,1fr);gap:10px; }
+.rubric-list div { padding:14px;border:1px solid var(--line); }
+.rubric-list p { margin:6px 0 0;color:var(--muted);font-size:13px;line-height:1.5; }
+.teacher-answers { margin-top:16px;padding:14px;border:1px solid var(--line);color:var(--blue); }
+.teacher-answers summary { cursor:pointer;font-weight:800; }
+.teacher-answers ul { margin-top:10px;color:var(--muted); }
 
 @media (max-width: 980px) {
   .nav { position:absolute;top:76px;left:0;right:0;display:none;flex-direction:column;align-items:stretch;gap:0;padding:12px 20px 18px;background:var(--navy);border-bottom:1px solid var(--line); }
@@ -211,4 +281,20 @@ footer > a:last-child { width:40px;height:40px;display:grid;place-items:center;b
   .presentation-preview { font-size:23px;padding:20px; }
   .friends-presentation-preview { padding:0; }
   .quiz-preview { inset:38px 18px 18px 34px;padding:18px; }
+  .lesson-kit-modal { width:100%;height:calc(100vh - 20px);padding:0; }
+  .lesson-kit-modal .modal-close { top:8px;right:8px; }
+  .lesson-kit-header { padding:20px 58px 16px 16px; }
+  .lesson-kit-header h2 { font-size:24px;line-height:1.12; }
+  .lesson-kit-header > p:last-child { font-size:14px; }
+  .lesson-kit-tabs { padding:10px 16px; }
+  .lesson-kit-tabs button { max-width:150px;font-size:12px; }
+  .lesson-kit-scroll { padding:20px 16px 24px; }
+  .lesson-kit-section h3 { font-size:22px; }
+  .lesson-kit-overview,.lesson-kit-columns,.lesson-stage-actions,.worksheet-grid,.lesson-kit-quiz,.rubric-list { grid-template-columns:1fr; }
+  .lesson-stage { grid-template-columns:36px 1fr;padding:10px; }
+  .lesson-stage-heading { align-items:flex-start;flex-direction:column; }
+  .lesson-kit-presentation { height:calc(100vh - 250px);min-height:360px; }
+  .worksheet-sentence { align-items:flex-start; }
+  .lesson-kit-quiz-actions { flex-wrap:wrap; }
+  .lesson-kit-score { width:100%; }
 }
